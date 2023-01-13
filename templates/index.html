@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cors Proxy</title>
+</head>
+
+<body>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            color-scheme: black;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        main {
+            margin: 50px 100px;
+        }
+
+        h1 {
+            font-size: 3em;
+        }
+
+        h2 {
+            font-size: 2em;
+        }
+
+        code,
+        p {
+            font-size: 1.3em;
+        }
+
+        .green {
+            color: rgb(78, 213, 24);
+        }
+
+        .yellow {
+            color: rgb(255, 243, 78);
+        }
+
+        .bold {
+            font-weight: bold;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        #post-demo {
+            border: 3px solid rgb(255, 243, 78);
+            border-radius: 4px;
+            padding: 5px;
+            cursor: pointer;
+        }
+
+        #get-demo {
+            cursor: pointer;
+            border: 3px solid rgb(78, 213, 24);
+            border-radius: 4px;
+            padding: 5px;
+        }
+
+        #response {
+            font-family: monospace;
+        }
+
+        @media only screen and (max-width: 800px) {
+            main {
+                margin: 20px 0px;
+            }
+
+            h1 {
+                font-size: 2.5em;
+            }
+
+            h2 {
+                font-size: 1.5em;
+            }
+
+            code,
+            p {
+                font-size: 1.1em;
+            }
+        }
+    </style>
+    <main>
+        <h1>Cors Proxy</h1>
+        <hr>
+
+        <h2>Usage</h2>
+        <p>
+            <code class="green bold">GET</code><code> /proxy?url={URL}</code>
+            <br><br>
+            for using URL parameters, use 
+            <br><br>
+            <code class="yellow bold">POST</code><code> /proxy</code><br>
+            <code>> Content-Type: application/json</code><br>
+            <code>> {"url":"{url}"}</code>
+        </p>
+
+        <hr>
+        <h2>Demo</h2>
+        <p id="get-demo">
+            <a href="/proxy?url=https://example.com" target="_blank">
+                <code class="green bold">GET</code><code> /proxy?url=https://example.com</code>
+            </a>
+        </p>
+        <p id="post-demo">
+            <code class="yellow bold hover">POST</code><code> /proxy?url=https://example.com</code></a><br>
+            <code>> Content-Type: application/json</code><br>
+            <code>> {"url":"https://example.com"}</code>
+        </p>
+        <p id="response">
+
+        </p>
+    </main>
+    <script>
+        document.querySelector("#post-demo").addEventListener("click", () => {
+            document.querySelector("#response").innerText = "Loading..."
+            fetch("https://corsproxy.chiroyce.repl.co/proxy", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ url: "https://example.com" })
+            })
+                .then(res => res.text())
+                .then(res => document.querySelector("#response").innerText = res)
+        })
+    </script>
+</body>
+
+</html>
